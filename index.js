@@ -12,7 +12,7 @@ const db =require('./config/mongoose');
 const session =require('express-session');
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-const MoongoStore=require('connect-mongo')(session);
+const MongoStore=require('connect-mongo')(session);
 const sassMiddleware=require('node-sass-middleware');
 
 app.use(sassMiddleware({
@@ -45,7 +45,7 @@ app.use(session({
     cookie:{
         maxAge:(1000*60*100)
     },
-    store:new MoongoStore(
+    store:new MongoStore(
       { 
         mongooseConnection:db,
         autoRemove:'disabled'  
