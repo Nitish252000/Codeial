@@ -1,4 +1,5 @@
 const User=require('../models/user');
+//lets keep it same as before
 module.exports.profile=function(req,res){
   //  res.end('<h1>User profile</h1>');
   User.findById(req.params.id,function(err,user){
@@ -61,10 +62,12 @@ module.exports.create=function(req,res){
 
 //sign in and create a session for the user
 module.exports.createSession=function(req,res){
+  req.flash('success','Logged in Successfullly');
   return res.redirect('/');
 }
 
 module.exports.destroySession=function(req,res){
   req.logout();
+  req.flash('success','You have logged out');
   return res.redirect('/');
 }
