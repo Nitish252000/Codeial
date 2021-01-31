@@ -13,8 +13,9 @@ module.exports.home=async function(req,res){
   // });
   //populate the user of each post
  try{
-
+     // populate the user of each post
    let posts=await Post.find({})
+   .sort('-createdAt')
    .populate('user')
    .populate({
     path:'comments',
@@ -36,3 +37,14 @@ module.exports.home=async function(req,res){
 
 //module.exports.profile=function(req,res){
   //  return res.end('<h1>welcome to profile<h1>')}
+
+
+// module.exports.actionName = function(req, res){}
+
+
+// using then
+// Post.find({}).populate('comments').then(function());
+
+// let posts = Post.find({}).populate('comments').exec();
+
+// posts.then()
