@@ -1,14 +1,17 @@
 const express=require('express');
+const env=require('./config/environment'); 
+const logger=require('morgan');
 const cookieParser=require('cookie-parser');
 const app=express();
 const port=8000;
+//const cors = require('cors');//for resolving has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource
 
 
 const expressLayouts=require('express-ejs-layouts');
+const db =require('./config/mongoose');
 app.use(expressLayouts);
 
-const db =require('./config/mongoose');
-
+// used for session cookie
 const session =require('express-session');
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
@@ -19,20 +22,36 @@ const sassMiddleware=require('node-sass-middleware');
 const flash=require('connect-flash');
 const customMware=require('./config/middleware');
 
-app.use(sassMiddleware({
-    src:'./assets/scss',
-    dest:'./assets/css',
-    debug:true,
-    outputStyle:'extended',
-    prefix:'/css'
-}));
+//setup the chat server to be used with socket.io
+const chatServer=require('http').Server(app);
+const chatSockets=require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chat server is listening on port 5000');
+
+const path =require('path');
+
+if(env.name=='development'){
+    app.use(sassMiddleware({
+        src:path.join(__dirname,env.asset_path,'/scss'),
+        dest:path.join(__dirname,env.asset_path,'/css'),
+        debug:true,
+        outputStyle:'extended',
+        prefix:'/css'
+    }));
+}
+
+app.use(express.static(env.asset_path));
 app.use(express.urlencoded());
 app.use(cookieParser());
 
-app.use(express.static('./assets'));
+
+
+//app.use(cors());
 
 //make the uploads path available to the browser
 app.use('/uploads',express.static(__dirname + '/uploads'));
+
+app.use(logger(env.morgan.mode,env.morgan.options));
 
 //extract style and scripts from sub pages into the layout
 app.set('layout extractStyles',true);
@@ -46,7 +65,7 @@ app.set('views','./views');
 app.use(session({
     name:'codeial',
     //TODO change the secret before deployment in production mode
-    secret:'blahsometing',
+    secret:env.session_cookie_key,
     saveUninitialized:false,
     resave:false,
     cookie:{
