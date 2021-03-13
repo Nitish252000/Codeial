@@ -3,6 +3,7 @@ const env=require('./config/environment');
 const logger=require('morgan');
 const cookieParser=require('cookie-parser');
 const app=express();
+require('./config/view-helpers')(app);
 const port=8000;
 //const cors = require('cors');//for resolving has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource
 
