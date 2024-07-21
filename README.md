@@ -25,7 +25,7 @@ Codeial is a dynamic social media platform designed to connect users through a v
 
 ## Getting Started
 To run Codeial locally, follow these steps:
-1. Clone the repository: git clone https://github.com/jayzadafiya/Codeial.git
+1. Clone the repository: git clone https://github.com/Nitish252000/NODEWS.git
 2. cd Codeial
 3. Install dependencies: npm install
 4. Set up MongoDB: Make sure you have MongoDB installed and running.
