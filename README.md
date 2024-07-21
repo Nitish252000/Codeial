@@ -21,3 +21,14 @@ Codeial is a dynamic social media platform designed to connect users through a v
 * Flash-connect: Displays flash messages to communicate user interactions and system responses.
 * Multer: Handles file uploads, enabling users to upload profile and post images.
 * Google OAuth: Allows users to register and log in using their Google accounts for added convenience.
+
+
+## Getting Started
+To run Codeial locally, follow these steps:
+1. Clone the repository: git clone https://github.com/jayzadafiya/Codeial.git
+2. cd Codeial
+3. Install dependencies: npm install
+4. Set up MongoDB: Make sure you have MongoDB installed and running.
+5. Configure Environment Variables: Set up environment variables for MongoDB connection, JWT secret, and other configurations.
+6. Start the server: npm start
+7. Open your web browser and visit: https://localhost:8000 to access the Codeial application
